@@ -15,6 +15,9 @@ const createApp = () => {
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
 
+  // Routes
+  app.use('/api', require('./api'));
+
   // Error handling
   app.use((err, req, res, next) => {
     console.error(err);
