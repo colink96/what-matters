@@ -1,4 +1,5 @@
 import axios from 'axios';
+import LOCALHOST from '../secrets';
 
 //ACTION TYPES
 const GET_ALL_TASKS = 'GET_ALL_TASKS';
@@ -15,7 +16,7 @@ const getAllTasks = tasks => {
 export const gotAllTasks = () => {
   return async dispatch => {
     try {
-      const { data } = await axios.get('/api/tasks');
+      const { data } = await axios.get(`${LOCALHOST}/api/tasks`);
       dispatch(getAllTasks(data));
     } catch (error) {
       console.log(error);
@@ -27,7 +28,7 @@ export const gotAllTasks = () => {
 export default function(state = { tasks: [] }, action) {
   switch (action.type) {
     case GET_ALL_TASKS:
-      return { ...state, tasks: action.tasks };
+      return { tasks: action.tasks };
     default:
       return state;
   }
