@@ -4,31 +4,8 @@ import { gotAllTasks } from '../store/task';
 import { connect } from 'react-redux';
 
 import Task from './task';
-
-const months = [
-  'January',
-  'February',
-  'March',
-  'April',
-  'May',
-  'June',
-  'July',
-  'August',
-  'September',
-  'October',
-  'November',
-  'December',
-];
-
-const days = [
-  'Sunday',
-  'Monday',
-  'Tuesday',
-  'Wednesday',
-  'Thursday',
-  'Friday',
-  'Saturday',
-];
+import days from '../utils/days';
+import months from '../utils/months';
 
 class disconnectedAllTasks extends React.Component {
   constructor() {
@@ -47,17 +24,19 @@ class disconnectedAllTasks extends React.Component {
   render() {
     return (
       <View>
-        <View>
+        <View style={styles.header}>
           <Text>
             Today is: {days[this.state.today.getDay()]},{' '}
             {months[this.state.today.getMonth()]} {this.state.today.getDate()},{' '}
             {this.state.today.getFullYear()}
           </Text>
         </View>
-        {this.state.loaded &&
-          this.props.tasks.map(task => {
-            return <Task task={task} key={task.id} />;
-          })}
+        <View style={styles.taskContainer}>
+          {this.state.loaded &&
+            this.props.tasks.map(task => {
+              return <Task task={task} key={task.id} />;
+            })}
+        </View>
       </View>
     );
   }
@@ -79,3 +58,18 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(disconnectedAllTasks);
+
+const styles = StyleSheet.create({
+  header: {
+    marginTop: 40,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  taskContainer: {
+    flex: 1,
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'space-evenly',
+  },
+});
