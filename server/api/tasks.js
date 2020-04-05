@@ -12,15 +12,6 @@ router.get('/', async (req, res, next) => {
 
     I accomplish this here using the filter method, but had this been a real database I would instead build a the query using an ORM called Sequelize
     (https://sequelize.org/master/).
-    /*
-
-    // Sequelize:
-    /*
-    tasks = await Task.findAll({where: {
-      date: today.getDate(),
-      month: today.getMonth(),
-      year: today.getFullYear()
-    }})
     */
 
     const tasks = data.filter(task => {
@@ -30,7 +21,45 @@ router.get('/', async (req, res, next) => {
         task.year === today.getFullYear()
       );
     });
-    res.send(tasks);
+    res.status(200).send(tasks);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.post('/', async (req, res, next) => {
+  try {
+    const newTask = {
+      id: data[data.length - 2].id + 1,
+      name: req.body.name,
+      minute: req.body.minute,
+      hour: req.body.hour,
+      date: req.body.date,
+      month: req.body.month,
+      year: req.body.year,
+      complete: false,
+    };
+
+    // Validating our data types before saving to our "DB"
+    if (
+      !newTask.name ||
+      typeof newTask.name != 'string' ||
+      !newTask.minute ||
+      typeof newTask.minute != 'number' ||
+      !newTask.hour ||
+      typeof newTask.hour != 'number' ||
+      !newTask.date ||
+      typeof newTask.date != 'number' ||
+      !newTask.month ||
+      typeof newTask.month != 'number' ||
+      !newTask.year ||
+      typeof newTask.year != 'number'
+    ) {
+      res.status(400).send('Bad request');
+    } else {
+      data.push(newTask);
+      res.status(200).send(newTask);
+    }
   } catch (error) {
     next(error);
   }
