@@ -20,14 +20,16 @@ router.post('/', async (req, res, next) => {
       hour: req.body.hour,
       complete: false,
     };
-    console.log(newTask);
+
     // Validating our data types before saving to our "DB"
     if (
       !newTask.name ||
       typeof newTask.name != 'string' ||
       !newTask.minute ||
+      newTask.minute > 59 ||
       typeof newTask.minute != 'number' ||
       !newTask.hour ||
+      newTask.hour > 23 ||
       typeof newTask.hour != 'number'
     ) {
       res.status(400).send('Bad request');
@@ -40,4 +42,19 @@ router.post('/', async (req, res, next) => {
   }
 });
 
+router.put('/:id', async (req, res, next) => {
+  try {
+    const task = data.find(el => {
+      return el.id == req.params.id;
+    });
+    if (!task) {
+      res.status(404).send('Not found');
+    } else {
+      task.complete = true;
+      res.send(task);
+    }
+  } catch (error) {
+    next(error);
+  }
+});
 module.exports = router;
