@@ -4,6 +4,7 @@ import LOCALHOST from '../secrets';
 //ACTION TYPES
 const GET_ALL_TASKS = 'GET_ALL_TASKS';
 const ADD_TASK = 'ADD_TASK';
+const COMPLETE_TASK = 'COMPLETE_TASK';
 
 //ACTION CREATORS
 const getAllTasks = tasks => {
@@ -19,6 +20,14 @@ const addTask = task => {
     type: ADD_TASK,
   };
 };
+
+const completeTask = task => {
+  return {
+    task,
+    type: COMPLETE_TASK,
+  };
+};
+
 //THUNKS
 export const gotAllTasks = () => {
   return async dispatch => {
@@ -42,6 +51,17 @@ export const addedTask = task => {
   };
 };
 
+export const completedTask = id => {
+  return async dispatch => {
+    try {
+      const { data } = await axios.put(`${LOCALHOST}/api/tasks/${id}`);
+      dispatch(completeTask(data));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
 //REDUCER
 export default function(state = { tasks: [] }, action) {
   switch (action.type) {
@@ -49,6 +69,11 @@ export default function(state = { tasks: [] }, action) {
       return { tasks: action.tasks };
     case ADD_TASK:
       return { tasks: [...state.tasks, action.task] };
+    case COMPLETE_TASK:
+      let tasks = state.tasks.filter(task => {
+        return task.id !== action.task.id;
+      });
+      return { tasks: [...tasks, action.task] };
     default:
       return state;
   }
