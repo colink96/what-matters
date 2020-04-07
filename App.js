@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 
 import store from './store';
 import AllTasks from './components/allTasks';
-import { AddTaskForm } from './components/addTaskForm';
+import AddTaskForm from './components/addTaskForm';
 
 export default function App() {
   return (

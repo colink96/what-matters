@@ -1,27 +1,11 @@
 const router = require('express').Router();
 
-// Loading dummy data from a file, tasks will always be scheduled for today's date.
+// Loading dummy data from a file
 const data = require('../db/data');
 
 router.get('/', async (req, res, next) => {
   try {
-    const today = new Date();
-
-    /*
-    Assumption: GET /api/tasks should only return tasks scheduled for today.
-
-    I accomplish this here using the filter method, but had this been a real database I would instead build a the query using an ORM called Sequelize
-    (https://sequelize.org/master/).
-    */
-
-    const tasks = data.filter(task => {
-      return (
-        task.date === today.getDate() &&
-        task.month === today.getMonth() &&
-        task.year === today.getFullYear()
-      );
-    });
-    res.status(200).send(tasks);
+    res.status(200).send(data);
   } catch (error) {
     next(error);
   }
@@ -30,16 +14,13 @@ router.get('/', async (req, res, next) => {
 router.post('/', async (req, res, next) => {
   try {
     const newTask = {
-      id: data[data.length - 2].id + 1,
+      id: data[data.length - 1].id + 1,
       name: req.body.name,
       minute: req.body.minute,
       hour: req.body.hour,
-      date: req.body.date,
-      month: req.body.month,
-      year: req.body.year,
       complete: false,
     };
-
+    console.log(newTask);
     // Validating our data types before saving to our "DB"
     if (
       !newTask.name ||
@@ -47,13 +28,7 @@ router.post('/', async (req, res, next) => {
       !newTask.minute ||
       typeof newTask.minute != 'number' ||
       !newTask.hour ||
-      typeof newTask.hour != 'number' ||
-      !newTask.date ||
-      typeof newTask.date != 'number' ||
-      !newTask.month ||
-      typeof newTask.month != 'number' ||
-      !newTask.year ||
-      typeof newTask.year != 'number'
+      typeof newTask.hour != 'number'
     ) {
       res.status(400).send('Bad request');
     } else {
