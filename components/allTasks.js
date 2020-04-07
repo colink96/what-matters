@@ -4,8 +4,7 @@ import { gotAllTasks } from '../store/task';
 import { connect } from 'react-redux';
 
 import Task from './task';
-import days from '../utils/days';
-import months from '../utils/months';
+import { days, months } from '../utils';
 
 class disconnectedAllTasks extends React.Component {
   constructor() {
@@ -67,9 +66,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   taskContainer: {
-    flex: 1,
     flexDirection: 'column',
     alignItems: 'center',
-    justifyContent: 'space-evenly',
+    justifyContent: 'flex-start',
   },
 });

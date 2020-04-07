@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
-import timeFormatter from '../utils/timeFormatter';
+import { timeFormatter } from '../utils';
 
 export default function Task(props) {
   return (
