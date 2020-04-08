@@ -36,10 +36,7 @@ router.post('/', async (req, res, next) => {
       res.status(400).send('Bad request');
     } else {
       data.push(newTask);
-      data.sort((a, b) => {
-        return a.hour * 60 + a.minute - (b.hour * 60 + b.minute);
-      });
-      res.status(200).send(data);
+      res.status(200).send(newTask);
     }
   } catch (error) {
     next(error);
@@ -55,10 +52,7 @@ router.put('/:id', async (req, res, next) => {
       res.status(404).send('Not found');
     } else {
       task.complete = !task.complete;
-      data.sort((a, b) => {
-        return a.hour * 60 + a.minute - (b.hour * 60 + b.minute);
-      });
-      res.send(data);
+      res.send(task);
     }
   } catch (error) {
     next(error);
@@ -70,7 +64,7 @@ router.delete('/:id', async (req, res, next) => {
     data = data.filter(task => {
       return task.id != req.params.id;
     });
-    res.send(data);
+    res.sendStatus(204);
   } catch (error) {
     next(error);
   }

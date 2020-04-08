@@ -5,6 +5,7 @@ import LOCALHOST from '../secrets';
 const GET_ALL_TASKS = 'GET_ALL_TASKS';
 const ADD_TASK = 'ADD_TASK';
 const COMPLETE_TASK = 'COMPLETE_TASK';
+const DELETE_TASK = 'DELETE_TASK';
 
 //ACTION CREATORS
 const getAllTasks = tasks => {
@@ -14,17 +15,24 @@ const getAllTasks = tasks => {
   };
 };
 
-const addTask = tasks => {
+const addTask = task => {
   return {
-    tasks,
+    task,
     type: ADD_TASK,
   };
 };
 
-const completeTask = tasks => {
+const completeTask = task => {
   return {
-    tasks,
+    task,
     type: COMPLETE_TASK,
+  };
+};
+
+const deleteTask = id => {
+  return {
+    id,
+    type: DELETE_TASK,
   };
 };
 
@@ -62,16 +70,42 @@ export const completedTask = id => {
   };
 };
 
+export const deletedTask = id => {
+  return async dispatch => {
+    try {
+      const { data } = await axios.delete(`${LOCALHOST}/api/tasks/${id}`);
+      dispatch(deleteTask(id));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
 //REDUCER
 export default function(state = { tasks: [] }, action) {
   switch (action.type) {
     case GET_ALL_TASKS:
       return { tasks: action.tasks };
     case ADD_TASK:
-      return { tasks: [...action.tasks] };
-    case COMPLETE_TASK:
       return {
-        tasks: [...action.tasks],
+        tasks: [...state.tasks, action.task].sort((a, b) => {
+          return a.hour * 60 + a.minute - (b.hour * 60 + b.minute);
+        }),
+      };
+    case COMPLETE_TASK:
+      let tasks = [...state.tasks].filter(task => {
+        return task.id != action.task.id;
+      });
+      tasks.push(action.task);
+      return {
+        tasks: tasks.sort((a, b) => {
+          return a.hour * 60 + a.minute - (b.hour * 60 + b.minute);
+        }),
+      };
+    case DELETE_TASK:
+      return {
+        tasks: [...state.tasks].filter(task => {
+          return task.id != action.task.id;
+        }),
       };
     default:
       return state;
