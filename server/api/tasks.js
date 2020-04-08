@@ -64,4 +64,15 @@ router.put('/:id', async (req, res, next) => {
     next(error);
   }
 });
+
+router.delete('/:id', async (req, res, next) => {
+  try {
+    data = data.filter(task => {
+      return task.id != req.params.id;
+    });
+    res.send(data);
+  } catch (error) {
+    next(error);
+  }
+});
 module.exports = router;
