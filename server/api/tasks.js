@@ -5,6 +5,9 @@ const data = require('../db/data');
 
 router.get('/', async (req, res, next) => {
   try {
+    data.sort((a, b) => {
+      return a.hour * 60 + a.minute - (b.hour * 60 + b.minute);
+    });
     res.status(200).send(data);
   } catch (error) {
     next(error);
@@ -25,17 +28,18 @@ router.post('/', async (req, res, next) => {
     if (
       !newTask.name ||
       typeof newTask.name != 'string' ||
-      !newTask.minute ||
       newTask.minute > 59 ||
       typeof newTask.minute != 'number' ||
-      !newTask.hour ||
       newTask.hour > 23 ||
       typeof newTask.hour != 'number'
     ) {
       res.status(400).send('Bad request');
     } else {
       data.push(newTask);
-      res.status(200).send(newTask);
+      data.sort((a, b) => {
+        return a.hour * 60 + a.minute - (b.hour * 60 + b.minute);
+      });
+      res.status(200).send(data);
     }
   } catch (error) {
     next(error);
@@ -50,8 +54,11 @@ router.put('/:id', async (req, res, next) => {
     if (!task) {
       res.status(404).send('Not found');
     } else {
-      task.complete = true;
-      res.send(task);
+      task.complete = !task.complete;
+      data.sort((a, b) => {
+        return a.hour * 60 + a.minute - (b.hour * 60 + b.minute);
+      });
+      res.send(data);
     }
   } catch (error) {
     next(error);

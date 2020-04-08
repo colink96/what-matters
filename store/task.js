@@ -14,16 +14,16 @@ const getAllTasks = tasks => {
   };
 };
 
-const addTask = task => {
+const addTask = tasks => {
   return {
-    task,
+    tasks,
     type: ADD_TASK,
   };
 };
 
-const completeTask = task => {
+const completeTask = tasks => {
   return {
-    task,
+    tasks,
     type: COMPLETE_TASK,
   };
 };
@@ -68,12 +68,11 @@ export default function(state = { tasks: [] }, action) {
     case GET_ALL_TASKS:
       return { tasks: action.tasks };
     case ADD_TASK:
-      return { tasks: [...state.tasks, action.task] };
+      return { tasks: [...action.tasks] };
     case COMPLETE_TASK:
-      let tasks = state.tasks.filter(task => {
-        return task.id !== action.task.id;
-      });
-      return { tasks: [...tasks, action.task] };
+      return {
+        tasks: [...action.tasks],
+      };
     default:
       return state;
   }

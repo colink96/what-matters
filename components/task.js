@@ -1,15 +1,35 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Switch } from 'react-native';
+import { connect } from 'react-redux';
 
 import { timeFormatter } from '../utils';
+import { completedTask } from '../store/task';
 
-export default function Task(props) {
-  return (
-    <View style={styles.container}>
-      <Text>{props.task.name}</Text>
-      <Text>{timeFormatter(props.task.hour, props.task.minute)}</Text>
-    </View>
-  );
+const mapDispatchToProps = dispatch => {
+  return {
+    completeTask: id => dispatch(completedTask(id)),
+  };
+};
+
+class Task extends React.Component {
+  constructor() {
+    super();
+  }
+
+  render() {
+    return (
+      <View style={styles.container}>
+        <Switch
+          value={this.props.task.complete}
+          onValueChange={() => this.props.completeTask(this.props.task.id)}
+        />
+        <Text>{this.props.task.name}</Text>
+        <Text>
+          {timeFormatter(this.props.task.hour, this.props.task.minute)}
+        </Text>
+      </View>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
@@ -28,3 +48,5 @@ const styles = StyleSheet.create({
     borderRadius: 3,
   },
 });
+
+export default connect(null, mapDispatchToProps)(Task);
