@@ -2,7 +2,7 @@ const router = require('express').Router();
 
 // Loading dummy data from a file
 let data = require('../db/data');
-
+let idCounter = data[data.length - 1].id + 1 || 1;
 router.get('/', async (req, res, next) => {
   try {
     data.sort((a, b) => {
@@ -17,13 +17,13 @@ router.get('/', async (req, res, next) => {
 router.post('/', async (req, res, next) => {
   try {
     const newTask = {
-      id: data[data.length - 1].id + 1,
+      id: idCounter,
       name: req.body.name,
       minute: req.body.minute,
       hour: req.body.hour,
       complete: false,
     };
-
+    idCounter++;
     // Validating our data types before saving to our "DB"
     if (
       !newTask.name ||
@@ -36,7 +36,7 @@ router.post('/', async (req, res, next) => {
       res.status(400).send('Bad request');
     } else {
       data.push(newTask);
-      res.status(200).send(newTask);
+      res.status(201).send(newTask);
     }
   } catch (error) {
     next(error);
@@ -52,7 +52,7 @@ router.put('/:id', async (req, res, next) => {
       res.status(404).send('Not found');
     } else {
       task.complete = !task.complete;
-      res.send(task);
+      res.status(200).send(task);
     }
   } catch (error) {
     next(error);

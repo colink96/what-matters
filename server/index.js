@@ -1,7 +1,5 @@
 const express = require('express');
 const app = express();
-const https = require('https');
-const http = require('http');
 const morgan = require('morgan');
 module.exports = app;
 
@@ -37,6 +35,7 @@ const boot = async () => {
   await startListening();
 };
 
+// For testing purposes!
 if (require.main === module) {
   boot();
 } else {
