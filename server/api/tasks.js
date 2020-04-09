@@ -1,7 +1,7 @@
 const router = require('express').Router();
 
 // Loading dummy data from a file
-const data = require('../db/data');
+let data = require('../db/data');
 
 router.get('/', async (req, res, next) => {
   try {

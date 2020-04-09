@@ -73,7 +73,7 @@ export const completedTask = id => {
 export const deletedTask = id => {
   return async dispatch => {
     try {
-      const { data } = await axios.delete(`${LOCALHOST}/api/tasks/${id}`);
+      await axios.delete(`${LOCALHOST}/api/tasks/${id}`);
       dispatch(deleteTask(id));
     } catch (error) {
       console.log(error);
@@ -104,7 +104,7 @@ export default function(state = { tasks: [] }, action) {
     case DELETE_TASK:
       return {
         tasks: [...state.tasks].filter(task => {
-          return task.id != action.task.id;
+          return task.id != action.id;
         }),
       };
     default:
