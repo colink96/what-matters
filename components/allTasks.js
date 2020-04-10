@@ -4,13 +4,11 @@ import { gotAllTasks } from '../store/task';
 import { connect } from 'react-redux';
 
 import Task from './task';
-import { days, months } from '../utils';
 
 class disconnectedAllTasks extends React.Component {
   constructor() {
     super();
     this.state = {
-      today: new Date(),
       loaded: false,
     };
   }
@@ -22,20 +20,22 @@ class disconnectedAllTasks extends React.Component {
 
   render() {
     return (
-      <View>
-        <View style={styles.header}>
-          <Text>
-            Today is: {days[this.state.today.getDay()]},{' '}
-            {months[this.state.today.getMonth()]} {this.state.today.getDate()},{' '}
-            {this.state.today.getFullYear()}
-          </Text>
-        </View>
-        <View style={styles.taskContainer}>
-          {this.state.loaded &&
-            this.props.tasks.map(task => {
-              return <Task task={task} key={task.id} />;
-            })}
-        </View>
+      <View style={styles.taskContainer}>
+        <Text
+          style={{
+            marginTop: 10,
+            marginBottom: 40,
+            alignSelf: 'flex-start',
+            color: '#347FC4',
+            fontFamily: 'Verdana-Bold',
+          }}
+        >
+          {this.props.tasks.length} tasks
+        </Text>
+        {this.state.loaded &&
+          this.props.tasks.map(task => {
+            return <Task task={task} key={task.id} />;
+          })}
       </View>
     );
   }
@@ -59,12 +59,6 @@ export default connect(
 )(disconnectedAllTasks);
 
 const styles = StyleSheet.create({
-  header: {
-    marginTop: 40,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
   taskContainer: {
     flexDirection: 'column',
     alignItems: 'center',

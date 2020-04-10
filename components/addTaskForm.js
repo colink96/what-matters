@@ -31,16 +31,17 @@ class AddTaskForm extends React.Component {
 
   render() {
     return (
-      <View>
-        <Text>Task Name: </Text>
+      <View style={styles.form}>
+        <Text style={{ alignSelf: 'center' }}>Task Name: </Text>
         <TextInput
+          style={{ borderWidth: 1, padding: 3, height: 50 }}
           placeholder="Task Name"
           value={this.state.name}
           onChange={e => {
             this.setState({ name: e.nativeEvent.text });
           }}
         />
-        <View style={styles.form}>
+        <View style={styles.pickerContainer}>
           <Picker
             style={styles.picker}
             selectedValue={
@@ -99,19 +100,16 @@ class AddTaskForm extends React.Component {
           </Picker>
         </View>
         <Button
-          title="submit"
-          onPress={() =>
+          title="Add Task"
+          onPress={() => {
             this.props.addTask({
               name: this.state.name,
               minute: this.state.minute,
               hour: this.state.hour,
-            })
-          }
+            });
+            this.setState({ name: '' });
+          }}
         />
-        <Text>{this.state.name}</Text>
-        <Text>
-          {this.state.hour}:{this.state.minute}
-        </Text>
       </View>
     );
   }
@@ -119,7 +117,16 @@ class AddTaskForm extends React.Component {
 
 const styles = StyleSheet.create({
   form: {
-    borderWidth: 2,
+    position: 'absolute',
+    top: 80,
+    backgroundColor: 'white',
+    borderRadius: 8,
+    borderWidth: 1,
+    padding: 10,
+    alignSelf: 'center',
+    marginHorizontal: 10,
+  },
+  pickerContainer: {
     width: 400,
     flexDirection: 'row',
   },
@@ -127,7 +134,6 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     flex: 1,
     height: 200,
-    borderWidth: 2,
   },
 });
 

@@ -25,7 +25,7 @@ class Task extends React.Component {
           value={this.props.task.complete}
           onValueChange={() => this.props.completeTask(this.props.task.id)}
         />
-        <View style={styles.task}>
+        <View style={{ flexDirection: 'row' }}>
           <SwipeGesture
             onSwipePerformed={action => {
               if (action === 'left') {
@@ -34,10 +34,20 @@ class Task extends React.Component {
             }}
             gestureStyle={styles.swipeContainer}
           >
-            <Text>{this.props.task.name}</Text>
-            <Text>
-              {timeFormatter(this.props.task.hour, this.props.task.minute)}
-            </Text>
+            <View style={styles.task}>
+              <Text style={{ fontFamily: 'Verdana' }}>
+                {this.props.task.name}
+              </Text>
+              <Text
+                style={{
+                  fontSize: 10,
+                  fontFamily: 'Verdana',
+                  color: 'lightgray',
+                }}
+              >
+                {timeFormatter(this.props.task.hour, this.props.task.minute)}
+              </Text>
+            </View>
           </SwipeGesture>
         </View>
       </View>
@@ -46,19 +56,16 @@ class Task extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  task: { flexDirection: 'row', flex: 1, justifyContent: 'space-between' },
-  container: {
-    height: 50,
-    padding: 5,
-    marginVertical: 5,
-    alignSelf: 'center',
+  task: {
     flexDirection: 'row',
-    width: 400,
-    backgroundColor: '#fff',
-    alignItems: 'center',
+    padding: 10,
     justifyContent: 'space-between',
-    borderWidth: 2,
-    borderRadius: 3,
+    margin: 10,
+  },
+  container: {
+    flexDirection: 'row',
+    marginLeft: 15,
+    alignItems: 'center',
   },
   swipeContainer: {
     height: '100%',
