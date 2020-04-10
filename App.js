@@ -33,7 +33,11 @@ class App extends React.Component {
                 }
               >
                 <View>
-                  <Text style={{ fontSize: 30, color: 'white' }}>+</Text>
+                  {this.state.showForm ? (
+                    <Text style={{ fontSize: 30, color: 'white' }}>x</Text>
+                  ) : (
+                    <Text style={{ fontSize: 30, color: 'white' }}>+</Text>
+                  )}
                 </View>
               </TouchableHighlight>
             </View>
