@@ -1,0 +1,128 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<View
+  style={
+    Object {
+      "backgroundColor": "#454ADE",
+      "flex": 1,
+    }
+  }
+>
+  <View
+    style={
+      Object {
+        "backgroundColor": "white",
+        "borderRadius": 8,
+        "flex": 1,
+        "marginHorizontal": 10,
+        "marginVertical": 40,
+        "padding": 20,
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "borderRadius": 8,
+          "flexDirection": "row",
+          "justifyContent": "space-between",
+        }
+      }
+    >
+      <View
+        style={
+          Object {
+            "alignSelf": "center",
+          }
+        }
+      >
+        <Text
+          style={
+            Object {
+              "fontFamily": "Verdana",
+              "fontSize": 20,
+            }
+          }
+        >
+          Saturday
+          ,
+           
+          April
+           
+          11
+          ,
+           
+          2020
+        </Text>
+      </View>
+      <View
+        accessible={true}
+        focusable={true}
+        isTVSelectable={true}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "alignContent": "center",
+            "backgroundColor": "#454ADE",
+            "borderRadius": 25,
+            "flexDirection": "row",
+            "height": 50,
+            "justifyContent": "center",
+            "marginBottom": 5,
+            "marginTop": 5,
+            "paddingBottom": 5,
+            "paddingTop": 5,
+            "width": 50,
+          }
+        }
+      >
+        <View
+          style={null}
+        >
+          <Text
+            style={
+              Object {
+                "color": "white",
+                "fontSize": 30,
+              }
+            }
+          >
+            +
+          </Text>
+        </View>
+      </View>
+    </View>
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "flexDirection": "column",
+          "justifyContent": "flex-start",
+        }
+      }
+    >
+      <Text
+        style={
+          Object {
+            "alignSelf": "flex-start",
+            "color": "#347FC4",
+            "fontFamily": "Verdana-Bold",
+            "marginBottom": 40,
+            "marginTop": 10,
+          }
+        }
+      >
+        0
+         tasks
+      </Text>
+    </View>
+  </View>
+</View>
+`;
