@@ -53,3 +53,12 @@ This repo is a project for my application to Matter Product Studio. It is a simp
 ### Part 3. Testing
 
 - Frontend testing
+
+# Project Setup:
+
+1. This project was built using React Native with Expo. Please install Expo CLI by running the command: `npm install expo-cli --global`. 
+2. If you are running this on your own iOS device, please install the Expo Client app from the App Store: https://apps.apple.com/us/app/expo-client/id982107779 . If you do not have an iOS device, or prefer to use the iOS simulator, please follow the instructions in the Expo documentation to install the iOS simulator: https://docs.expo.io/versions/latest/workflow/ios-simulator/
+3. In the project directory run: `npm install` to install any project dependencies.
+4. Create a `secrets.js` file in the top level directory with the following line:
+`module.exports = 'http://[YOUR LOCAL IP ADDRESS HERE]:8080';`
+5. Run `npm start` to start the metro server, and the backend. This will output a QR code for your iOS device to run the project. If you are running it on the iOS simulator, go to the URL listed for Expo Devtools where you will be able to start the simulator.
