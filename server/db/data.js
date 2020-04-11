@@ -1,5 +1,3 @@
-const today = new Date();
-
 const tasks = [
   {
     id: 1,
