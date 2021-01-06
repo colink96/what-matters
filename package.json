@@ -14,7 +14,7 @@
     "preset": "react-native"
   },
   "dependencies": {
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "chai": "^4.2.0",
     "chai-things": "^0.2.0",
     "expo": "~37.0.3",
